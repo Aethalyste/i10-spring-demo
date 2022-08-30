@@ -4,8 +4,9 @@ import com.itentika.autoservice.dto.OrderDTO;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,10 +31,17 @@ public class Order {
 
     @ManyToOne
     private Client client;
+
 //    private Collection<OrderItem> orderItems;
-//    private Collection<OrderHistory> orderHistory;
-//    private User master;
-//    private User administrator;
+
+    @OneToMany(mappedBy="order")
+    private List<OrderHistory> orderHistory = new ArrayList<>();
+
+    @ManyToOne
+    private Employee master;
+
+    @ManyToOne
+    private Employee administrator;
 
     public Order(OrderDTO orderDTO, Client client) {
         this.reason = orderDTO.getReason();
@@ -41,5 +49,13 @@ public class Order {
         this.endDate = orderDTO.getEndDate();
         this.comment = orderDTO.getComment();
         this.client = client;
+    }
+
+    public void setMaster(Employee master) {
+        this.master = master;
+    }
+
+    public void addOrderHistory(OrderHistory orderHistory) {
+        this.orderHistory.add(orderHistory);
     }
 }

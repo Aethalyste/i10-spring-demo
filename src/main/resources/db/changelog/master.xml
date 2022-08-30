@@ -5,10 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1660834547531-1" author="nikita.chernyak">
+    <changeSet id="1661864221309-1" author="aetha (generated)">
         <createTable tableName="clients">
             <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_client"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_clients"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
             <column name="phone_number" type="VARCHAR(255)"/>
@@ -16,21 +16,71 @@
             <column name="address" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet id="1660834547531-2" author="nikita.chernyak">
+    <changeSet id="1661864221309-2" author="aetha (generated)">
+        <createTable tableName="employees">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_employees"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="position_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1661864221309-3" author="aetha (generated)">
+        <createTable tableName="order_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_order_history"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="comment" type="VARCHAR(255)"/>
+            <column name="created_date" type="DATETIME"/>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1661864221309-4" author="aetha (generated)">
         <createTable tableName="orders">
             <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_order"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_orders"/>
             </column>
             <column name="reason" type="VARCHAR(255)"/>
             <column name="begin_date" type="DATETIME"/>
             <column name="end_date" type="DATETIME"/>
             <column name="comment" type="VARCHAR(255)"/>
             <column name="client_id" type="BIGINT"/>
+            <column name="master_id" type="INT"/>
+            <column name="administrator_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1660834547531-3" author="nikita.chernyak">
-        <addForeignKeyConstraint baseColumnNames="client_id" baseTableName="orders" constraintName="FK_ORDER_ON_CLIENT"
+    <changeSet id="1661864221309-5" author="aetha (generated)">
+        <createTable tableName="positions">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_positions"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1661864221309-6" author="aetha (generated)">
+        <addForeignKeyConstraint baseColumnNames="position_id" baseTableName="employees"
+                                 constraintName="FK_EMPLOYEES_ON_POSITION" referencedColumnNames="id"
+                                 referencedTableName="positions"/>
+    </changeSet>
+    <changeSet id="1661864221309-7" author="aetha (generated)">
+        <addForeignKeyConstraint baseColumnNames="administrator_id" baseTableName="orders"
+                                 constraintName="FK_ORDERS_ON_ADMINISTRATOR" referencedColumnNames="id"
+                                 referencedTableName="employees"/>
+    </changeSet>
+    <changeSet id="1661864221309-8" author="aetha (generated)">
+        <addForeignKeyConstraint baseColumnNames="client_id" baseTableName="orders" constraintName="FK_ORDERS_ON_CLIENT"
                                  referencedColumnNames="id" referencedTableName="clients"/>
+    </changeSet>
+    <changeSet id="1661864221309-9" author="aetha (generated)">
+        <addForeignKeyConstraint baseColumnNames="master_id" baseTableName="orders" constraintName="FK_ORDERS_ON_MASTER"
+                                 referencedColumnNames="id" referencedTableName="employees"/>
+    </changeSet>
+    <changeSet id="1661864221309-10" author="aetha (generated)">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_history"
+                                 constraintName="FK_ORDER_HISTORY_ON_ORDER" referencedColumnNames="id"
+                                 referencedTableName="orders"/>
     </changeSet>
 
 </databaseChangeLog>

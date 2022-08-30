@@ -1,11 +1,12 @@
 package com.itentika.autoservice.domain;
 
-import javax.persistence.*;
-
 import com.itentika.autoservice.dto.ClientDTO;
-import lombok.Getter;
 
 import java.util.Date;
+import javax.persistence.*;
+
+import lombok.Getter;
+
 
 @Entity
 @Getter

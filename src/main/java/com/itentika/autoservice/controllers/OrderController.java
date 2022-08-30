@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class OrderController {
     private final OrderService orderService;
@@ -21,8 +23,18 @@ public class OrderController {
         method = RequestMethod.POST,
         produces = { MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> saveClientData(@RequestBody OrderDTO orderDTO) {
-        orderService.createOrder(orderDTO);
+    public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO) {
+        orderDTO = orderService.createOrder(orderDTO);
+
+        return ResponseEntity.of(Optional.of(orderDTO));
+    }
+
+    @RequestMapping(value="/order/{id}/pick",
+            method = RequestMethod.POST,
+            produces = { MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> pickOrder(@RequestBody OrderDTO orderDTO) {
+        orderService.pickOrder(orderDTO);
 
         return ResponseEntity.ok().build();
     }
