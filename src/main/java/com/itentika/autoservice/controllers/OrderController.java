@@ -4,10 +4,7 @@ import com.itentika.autoservice.dto.OrderDTO;
 import com.itentika.autoservice.service.OrderService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -29,13 +26,13 @@ public class OrderController {
         return ResponseEntity.of(Optional.of(orderDTO));
     }
 
-    @RequestMapping(value="/order/{id}/pick",
-            method = RequestMethod.POST,
+    @RequestMapping(value="/order/accept",
+            method = RequestMethod.PATCH,
             produces = { MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> pickOrder(@RequestBody OrderDTO orderDTO) {
-        orderService.pickOrder(orderDTO);
+        orderDTO = orderService.acceptOrder(orderDTO);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.of(Optional.of(orderDTO));
     }
 }

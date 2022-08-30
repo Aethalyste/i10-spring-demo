@@ -2,12 +2,14 @@ package com.itentika.autoservice.domain;
 
 import com.itentika.autoservice.dto.OrderDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Getter
 @Table(name = "orders")
@@ -34,7 +36,7 @@ public class Order {
 
 //    private Collection<OrderItem> orderItems;
 
-    @OneToMany(mappedBy="order")
+    @OneToMany(mappedBy="order", cascade = CascadeType.PERSIST)
     private List<OrderHistory> orderHistory = new ArrayList<>();
 
     @ManyToOne
@@ -43,19 +45,36 @@ public class Order {
     @ManyToOne
     private Employee administrator;
 
-    public Order(OrderDTO orderDTO, Client client) {
+    public Order(OrderDTO orderDTO, Client client, Employee administrator) {
         this.reason = orderDTO.getReason();
         this.beginDate = orderDTO.getBeginDate();
         this.endDate = orderDTO.getEndDate();
         this.comment = orderDTO.getComment();
         this.client = client;
+        this.administrator = administrator;
+
+        new OrderHistory(this, OrderStatus.NEW, "This is a new order", new Date());
     }
 
-    public void setMaster(Employee master) {
+    public void addOrderHistory(OrderHistory orderHistoryEntry) {
+        this.orderHistory.add(orderHistoryEntry);
+    }
+
+    public OrderHistory getLastHistoryEntry() {
+//        orderHistory.sort(Comparator.comparing(OrderHistory::getCreatedDate).reversed());
+        return orderHistory.size() > 0 ? orderHistory.get(orderHistory.size() - 1) : null;
+    }
+
+    public OrderStatus getStatus() {
+        return getLastHistoryEntry() != null ? getLastHistoryEntry().getStatus() : OrderStatus.NEW;
+    }
+
+    public void accept(Employee master) {
+        if (this.getStatus() != OrderStatus.NEW) {
+            throw new IllegalStateException("Order is in invalid state");
+        }
+
         this.master = master;
-    }
-
-    public void addOrderHistory(OrderHistory orderHistory) {
-        this.orderHistory.add(orderHistory);
+        new OrderHistory(this, OrderStatus.ACCEPTED, "Order accepted", new Date());
     }
 }

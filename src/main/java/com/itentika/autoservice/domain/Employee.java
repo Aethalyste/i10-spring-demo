@@ -3,6 +3,7 @@ package com.itentika.autoservice.domain;
 import javax.persistence.*;
 import lombok.*;
 
+@NoArgsConstructor
 @Entity
 @Getter
 @Table(name = "employees")
@@ -20,4 +21,10 @@ public class Employee {
 
     @ManyToOne
     private Position position;
+
+    public Employee(String name, String phoneNumber, Position position) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.position = position;
+    }
 }

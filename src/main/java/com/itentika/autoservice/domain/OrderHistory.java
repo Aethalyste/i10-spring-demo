@@ -1,10 +1,12 @@
 package com.itentika.autoservice.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@NoArgsConstructor
 @Entity
 @Getter
 @Table(name = "order_history")

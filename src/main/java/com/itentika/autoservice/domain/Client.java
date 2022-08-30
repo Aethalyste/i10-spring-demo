@@ -6,8 +6,9 @@ import java.util.Date;
 import javax.persistence.*;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-
+@NoArgsConstructor
 @Entity
 @Getter
 @Table(name = "clients")

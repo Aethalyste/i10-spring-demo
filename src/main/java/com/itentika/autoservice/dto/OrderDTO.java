@@ -35,8 +35,8 @@ public class OrderDTO {
 		if (order.getMaster() != null) {
 			this.master = new EmployeeDTO(order.getMaster());
 		}
-		if (order.getMaster() != null) {
-			this.administrator = new EmployeeDTO(order.getMaster());
+		if (order.getAdministrator() != null) {
+			this.administrator = new EmployeeDTO(order.getAdministrator());
 		}
 	}
 }
