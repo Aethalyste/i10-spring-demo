@@ -35,10 +35,11 @@ public class Order {
     @ManyToOne
     private Client client;
 
-//    private Collection<OrderItem> orderItems;
+    @OneToMany(mappedBy="order", cascade = CascadeType.PERSIST)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToMany(mappedBy="order", cascade = CascadeType.PERSIST)
-    private List<OrderHistory> orderHistory = new ArrayList<>();
+    private List<OrderHistory> orderHistoryList = new ArrayList<>();
 
     @ManyToOne
     private Employee master;
@@ -58,12 +59,12 @@ public class Order {
     }
 
     public void addOrderHistory(OrderHistory orderHistoryEntry) {
-        this.orderHistory.add(orderHistoryEntry);
+        this.orderHistoryList.add(orderHistoryEntry);
     }
 
     public OrderHistory getLastHistoryEntry() {
 //        orderHistory.sort(Comparator.comparing(OrderHistory::getCreatedDate).reversed());
-        return orderHistory.size() > 0 ? orderHistory.get(orderHistory.size() - 1) : null;
+        return orderHistoryList.size() > 0 ? orderHistoryList.get(orderHistoryList.size() - 1) : null;
     }
 
     public OrderStatus getStatus() {
@@ -79,7 +80,11 @@ public class Order {
         new OrderHistory(this, OrderStatus.ACCEPTED, "Order accepted", new Date());
     }
 
-    public void updateStatus(OrderStatusDTO orderStatusDTO) {
-        new OrderHistory(this, orderStatusDTO.getStatus(), orderStatusDTO.getComment(), new Date());
+    public void updateStatus(OrderStatus status, String comment) {
+        new OrderHistory(this, status, comment, new Date());
+    }
+
+    public void addItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
     }
 }

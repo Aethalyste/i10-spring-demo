@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.InputMismatchException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = { InputMismatchException.class, IllegalStateException.class })

@@ -39,9 +39,21 @@ public class OrderController {
         return ResponseEntity.of(Optional.of(orderDTO));
     }
 
+    // 3. Add items
+    @RequestMapping(value="/order/items",
+            method = RequestMethod.PATCH,
+            produces = { MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> addItems(@RequestBody OrderDTO OrderDTO) {
+        OrderDTO orderDTO = orderService.addItems(OrderDTO);
+
+        return ResponseEntity.of(Optional.of(orderDTO));
+    }
+
+
     // 4. Change status
     @RequestMapping(value="/order/status",
-            method = RequestMethod.POST,
+            method = RequestMethod.PUT,
             produces = { MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> updateStatus(@RequestBody OrderStatusDTO orderStatusDTO) {

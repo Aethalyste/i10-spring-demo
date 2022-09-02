@@ -30,7 +30,9 @@ public class OrderDTO {
 		this.comment = order.getComment();
 		this.client = new ClientDTO(order.getClient());
 
-		order.getOrderHistory().forEach(orderHistory -> this.orderHistory.add(new OrderHistoryDTO(orderHistory)));
+		order.getOrderItems().forEach(orderItem -> this.orderItem.add(new OrderItemDTO(orderItem)));
+		order.getOrderHistoryList().forEach(orderHistory -> this.orderHistory.add(new OrderHistoryDTO(orderHistory)));
+
 		if (order.getMaster() != null) {
 			this.master = new EmployeeDTO(order.getMaster());
 		}
