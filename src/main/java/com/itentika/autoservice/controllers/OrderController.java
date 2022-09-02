@@ -1,6 +1,7 @@
 package com.itentika.autoservice.controllers;
 
 import com.itentika.autoservice.dto.OrderDTO;
+import com.itentika.autoservice.dto.OrderStatusDTO;
 import com.itentika.autoservice.service.OrderService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,23 +17,47 @@ public class OrderController {
         this.orderService = clientService;
     }
 
+    // 1. Create order
     @RequestMapping(value="/order",
         method = RequestMethod.POST,
         produces = { MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<?> create(@RequestBody OrderDTO orderDTO) {
         orderDTO = orderService.createOrder(orderDTO);
 
         return ResponseEntity.of(Optional.of(orderDTO));
     }
 
+    // 2. Pick order
     @RequestMapping(value="/order/accept",
             method = RequestMethod.PATCH,
             produces = { MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> pickOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<?> pick(@RequestBody OrderDTO orderDTO) {
         orderDTO = orderService.acceptOrder(orderDTO);
 
         return ResponseEntity.of(Optional.of(orderDTO));
+    }
+
+    // 4. Change status
+    @RequestMapping(value="/order/status",
+            method = RequestMethod.POST,
+            produces = { MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> updateStatus(@RequestBody OrderStatusDTO orderStatusDTO) {
+        OrderDTO orderDTO = orderService.updateStatus(orderStatusDTO);
+
+        return ResponseEntity.of(Optional.of(orderDTO));
+    }
+
+    // 5. Current status
+    @RequestMapping(value="/order/status",
+            method = RequestMethod.GET,
+            produces = { MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> getStatus(@RequestBody OrderDTO orderDTO) {
+        OrderStatusDTO orderStatusDTO = orderService.getStatus(orderDTO);
+
+        return ResponseEntity.of(Optional.of(orderStatusDTO));
     }
 }

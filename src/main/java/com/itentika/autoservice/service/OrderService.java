@@ -6,6 +6,7 @@ import com.itentika.autoservice.dao.OrderHistoryRepository;
 import com.itentika.autoservice.dao.OrderRepository;
 import com.itentika.autoservice.domain.*;
 import com.itentika.autoservice.dto.OrderDTO;
+import com.itentika.autoservice.dto.OrderStatusDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.InputMismatchException;
@@ -55,6 +56,26 @@ public class OrderService {
                 .orElseThrow(() -> new InputMismatchException("Master not found"));
 
         order.accept(master);
+
+        orderRepository.flush();
+
+        return new OrderDTO(order);
+    }
+
+    public OrderStatusDTO getStatus(OrderDTO orderDTO) {
+        Order order = orderRepository
+                .findById(orderDTO.getId())
+                .orElseThrow(() -> new InputMismatchException("Order not found"));
+
+        return new OrderStatusDTO(order);
+    }
+
+    public OrderDTO updateStatus(OrderStatusDTO orderStatusDTO) {
+        Order order = orderRepository
+                .findById(orderStatusDTO.getOrderId())
+                .orElseThrow(() -> new InputMismatchException("Order not found"));
+
+        order.updateStatus(orderStatusDTO);
 
         orderRepository.flush();
 

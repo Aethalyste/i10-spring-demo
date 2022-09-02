@@ -1,6 +1,7 @@
 package com.itentika.autoservice.domain;
 
 import com.itentika.autoservice.dto.OrderDTO;
+import com.itentika.autoservice.dto.OrderStatusDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -76,5 +77,9 @@ public class Order {
 
         this.master = master;
         new OrderHistory(this, OrderStatus.ACCEPTED, "Order accepted", new Date());
+    }
+
+    public void updateStatus(OrderStatusDTO orderStatusDTO) {
+        new OrderHistory(this, orderStatusDTO.getStatus(), orderStatusDTO.getComment(), new Date());
     }
 }
