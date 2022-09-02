@@ -7,7 +7,7 @@ import com.itentika.autoservice.dto.OrderItemDTO;
 import com.itentika.autoservice.dto.OrderStatusDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.InputMismatchException;
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class OrderService {
@@ -32,7 +32,7 @@ public class OrderService {
     public OrderDTO createOrder(OrderDTO orderDTO) {
         Employee administrator = employeeRepository
                 .findById(orderDTO.getAdministrator().getId())
-                .orElseThrow(() -> new InputMismatchException("Administrator not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Administrator not found"));
 
         Client client = new Client(orderDTO.getClient());
         Order order = new Order(orderDTO, client, administrator);
@@ -48,11 +48,11 @@ public class OrderService {
     public OrderDTO acceptOrder(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
-                .orElseThrow(() -> new InputMismatchException("Order not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
         Employee master = employeeRepository
                 .findById(orderDTO.getMaster().getId())
-                .orElseThrow(() -> new InputMismatchException("Master not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Master not found"));
 
         order.accept(master);
 
@@ -64,7 +64,7 @@ public class OrderService {
     public OrderStatusDTO getStatus(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
-                .orElseThrow(() -> new InputMismatchException("Order not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
         return new OrderStatusDTO(order);
     }
@@ -72,7 +72,7 @@ public class OrderService {
     public OrderDTO updateStatus(OrderStatusDTO orderStatusDTO) {
         Order order = orderRepository
                 .findById(orderStatusDTO.getOrderId())
-                .orElseThrow(() -> new InputMismatchException("Order not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
         order.updateStatus(orderStatusDTO.getStatus(), orderStatusDTO.getComment());
 
@@ -84,12 +84,12 @@ public class OrderService {
     public OrderDTO addItems(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
-                .orElseThrow(() -> new InputMismatchException("Order not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
         orderDTO.getOrderItem().forEach((OrderItemDTO orderItemDto) -> {
             ItemPrice itemPrice = itemPriceRepository
                     .findById(orderItemDto.getPriceItem().getId())
-                    .orElseThrow(() -> new InputMismatchException("ItemPrice not found"));
+                    .orElseThrow(() -> new EntityNotFoundException("ItemPrice not found"));
             new OrderItem(order, itemPrice, orderItemDto.getQuantity());
         });
 

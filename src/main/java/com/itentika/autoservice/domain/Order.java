@@ -1,9 +1,9 @@
 package com.itentika.autoservice.domain;
 
 import com.itentika.autoservice.dto.OrderDTO;
-import com.itentika.autoservice.dto.OrderStatusDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.dao.DataAccessException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class Order {
 
     public void accept(Employee master) {
         if (this.getStatus() != OrderStatus.NEW) {
-            throw new IllegalStateException("Order is in invalid state");
+            throw new DataAccessException("Order is in invalid state") {};
         }
 
         this.master = master;
