@@ -3,10 +3,10 @@ package com.itentika.autoservice.dto;
 import com.itentika.autoservice.domain.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class EmployeeDTO {
 	private Long id;
