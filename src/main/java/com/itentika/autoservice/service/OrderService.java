@@ -97,4 +97,17 @@ public class OrderService {
 
         return new OrderDTO(order);
     }
+
+    public OrderDTO updateOrder(OrderDTO orderDTO) {
+        Order order = orderRepository
+                .findById(orderDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
+
+        order.update(orderDTO);
+        order.getClient().update(orderDTO.getClient());
+
+        orderRepository.flush();
+
+        return new OrderDTO(order);
+    }
 }

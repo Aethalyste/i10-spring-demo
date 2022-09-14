@@ -87,4 +87,11 @@ public class Order {
     public void addItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
     }
+
+    public void update(OrderDTO orderDTO) {
+        this.reason = orderDTO.getReason();
+        this.beginDate = orderDTO.getBeginDate();
+        this.endDate = orderDTO.getEndDate();
+        this.comment = orderDTO.getComment();
+    }
 }

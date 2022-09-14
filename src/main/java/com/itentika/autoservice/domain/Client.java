@@ -31,6 +31,10 @@ public class Client {
     private String address;
 
     public Client(ClientDTO clientDTO) {
+        this.update(clientDTO);
+    }
+
+    public void update(ClientDTO clientDTO) {
         this.name = clientDTO.getName();
         this.phoneNumber = clientDTO.getPhoneNumber();
         this.birthDate = clientDTO.getBirthDate();

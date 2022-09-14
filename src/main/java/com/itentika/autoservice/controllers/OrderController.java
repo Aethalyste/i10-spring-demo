@@ -72,4 +72,15 @@ public class OrderController {
 
         return ResponseEntity.of(Optional.of(orderStatusDTO));
     }
+
+    // 6. Edit order
+    @RequestMapping(value="/order",
+            method = RequestMethod.PATCH,
+            produces = { MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> updateOrder(@RequestBody OrderDTO orderDTO) {
+        orderDTO = orderService.updateOrder(orderDTO);
+
+        return ResponseEntity.of(Optional.of(orderDTO));
+    }
 }

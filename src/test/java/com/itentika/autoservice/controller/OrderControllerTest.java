@@ -17,7 +17,6 @@ public class OrderControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
     @Test
     void testOrderAcceptNonexistent_throwsException() throws Exception {
         String json = """
