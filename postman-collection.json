@@ -1,0 +1,173 @@
+{
+  "info": {
+    "_postman_id": "7eebbbed-e7ac-4147-97f3-7d0dd9c1e834",
+    "name": "java-spring-demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3680206"
+  },
+  "item": [
+    {
+      "name": "order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"reason\": \"Требуется ремонт ходовой tot\",\r\n  \"beginDate\": \"2022-07-30T12:30\",\r\n  \"client\": {\r\n    \"name\": \"Евгений\",\r\n    \"phoneNumber\": \"+79150614302\"\r\n  },\r\n  \"administrator\": {\r\n      \"id\": 1\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}/order",
+          "host": [
+            "{{server}}"
+          ],
+          "path": [
+            "order"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "order.update",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 1,\r\n  \"reason\": \"Требуется ремонт ходовой\",\r\n  \"beginDate\": \"2022-07-30T12:30\",\r\n  \"endDate\": null,\r\n  \"comment\": null,\r\n  \"client\": {\r\n    \"id\": null,\r\n    \"name\": \"Жека\",\r\n    \"phoneNumber\": \"+79150614302\",\r\n    \"birthDate\": \"2001-10-10T00:00\",\r\n    \"address\": null\r\n  },\r\n  \"orderItem\": null,\r\n  \"orderHistory\": null,\r\n  \"master\": null,\r\n  \"administrator\": {\r\n      \"id\": 2\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}/order",
+          "host": [
+            "{{server}}"
+          ],
+          "path": [
+            "order"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "order.accept",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 1,\r\n  \"master\": {\r\n      \"id\": 2\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}/order/accept",
+          "host": [
+            "{{server}}"
+          ],
+          "path": [
+            "order",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "order.items",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 1,\r\n  \"orderItem\": [\r\n  {\r\n    \"quantity\": 1,\r\n    \"priceItem\": {\r\n      \"id\": 4\r\n    }\r\n  },\r\n  {\r\n    \"quantity\": 2,\r\n    \"priceItem\": {\r\n      \"id\": 2\r\n    }\r\n  }\r\n  ]\r\n\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}/order/items",
+          "host": [
+            "{{server}}"
+          ],
+          "path": [
+            "order",
+            "items"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "order.status",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 1\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}/order/status",
+          "host": [
+            "{{server}}"
+          ],
+          "path": [
+            "order",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "order.updateStatus",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"orderId\": 1,\r\n    \"status\": \"IN_QUEUEa\",\r\n    \"comment\": \"Order in work\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}/order/status",
+          "host": [
+            "{{server}}"
+          ],
+          "path": [
+            "order",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
